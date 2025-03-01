@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Improved Explainable AI Mind Map</title>
+  <style>
+      body {
+          font-family: Arial, sans-serif;
+          margin: 20px;
+          background-color: #f8f9fa;
+      }
+      .container {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+      }
+      .mindmap {
+          position: relative;
+          width: 1400px;
+          height: 1000px;
+          margin: 20px 0;
+          background-color: white;
+          border-radius: 10px;
+          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+          overflow: hidden;
+      }
+      .node {
+          position: absolute;
+          padding: 12px;
+          border-radius: 8px;
+          cursor: pointer;
+          font-weight: bold;
+          text-align: center;
+          transition: all 0.3s ease;
+          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+      .node:hover {
+          transform: scale(1.05);
+          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      }
+      .red {
+          background-color: #ffcccc;
+          border: 2px solid #e60000;
+          color: #990000;
+      }
+      .blue {
+          background-color: #cce5ff;
+          border: 2px solid #0066cc;
+          color: #004080;
+      }
+      .green {
+          background-color: #ccffcc;
+          border: 2px solid #00cc00;
+          color: #006600;
+      }
+      #infoPanel {
+          width: 1000px;
+          min-height: 150px;
+          padding: 15px;
+          margin-top: 20px;
+          background-color: white;
+          border-radius: 10px;
+          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+          display: none;
+      }
+      .infoTitle {
+          font-size: 1.2em;
+          font-weight: bold;
+          margin-bottom: 10px;
+          color: #333;
+          border-bottom: 2px solid #ddd;
+          padding-bottom: 5px;
+      }
+      .infoContent {
+          line-height: 1.5;
+      }
+      line {
+          stroke: #999;
+          stroke-width: 2;
+      }
+      .legend {
+          margin-top: 20px;
+          display: flex;
+          gap: 20px;
+      }
+      .legendItem {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+      }
+      .legendBox {
+          width: 20px;
+          height: 20px;
+          border-radius: 4px;
+      }
+      .highlight {
+          font-weight: bold;
+          color: #e74c3c;
+      }
+      svg {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          z-index: 1;
+      }
+      .node {
+          z-index: 2;
+      }
+  </style>
+</head>
+<body>
+  <div class="container">
+      <h1>Explainable AI (XAI)</h1>
+      
+      <div class="mindmap" id="mindmap">
+          <!-- SVG for lines -->
+          <svg width="1100" height="800">
+              <!-- Lines from central node to major branches -->
+              <line x1="550" y1="400" x2="200" y2="150" />
+              <line x1="550" y1="400" x2="900" y2="150" />
+              <line x1="550" y1="400" x2="200" y2="650" />
+              <line x1="550" y1="400" x2="900" y2="650" />
+              <line x1="550" y1="400" x2="550" y2="700" />
+              
+              <!-- Lines from "Why Explain" to its details -->
+              <line x1="200" y1="150" x2="100" y2="50" />
+              <line x1="200" y1="150" x2="300" y2="50" />
+              <line x1="200" y1="150" x2="200" y2="250" />
+              
+              <!-- Lines from "Theory" to its details -->
+              <line x1="900" y1="150" x2="750" y2="50" />
+              <line x1="900" y1="150" x2="1000" y2="50" />
+              <line x1="900" y1="150" x2="850" y2="250" />
+              
+              <!-- Lines from "Practice" to its details -->
+              <line x1="200" y1="650" x2="100" y2="550" />
+              <line x1="200" y1="650" x2="300" y2="550" />
+              <line x1="200" y1="650" x2="100" y2="750" />
+              <line x1="200" y1="650" x2="300" y2="750" />
+              
+              <!-- Lines from "Open Problems" to its details -->
+              <line x1="900" y1="650" x2="800" y2="550" />
+              <line x1="900" y1="650" x2="1000" y2="550" />
+              <line x1="900" y1="650" x2="800" y2="750" />
+              <line x1="900" y1="650" x2="1000" y2="750" />
+              
+              <!-- Lines from "Conclusion" to its details -->
+              <line x1="550" y1="700" x2="400" y2="750" />
+              <line x1="550" y1="700" x2="700" y2="750" />
+              <line x1="550" y1="700" x2="550" y2="750" />
+          </svg>
+          
+          <!-- Central Node: Explainable AI (big picture) -->
+          <div class="node red" style="width: 180px; top: 375px; left: 460px;" 
+              onclick="showInfo('Explainable AI', 
+              '&lt;ul&gt;&lt;li&gt;<span class=&quot;highlight&quot;>Explainable AI (XAI)</span> addresses the black box problem by providing insight into model decisions.&lt;/li&gt;&lt;li&gt;It is essential for auditability, validation, and discovery in high-stakes domains.&lt;/li&gt;&lt;li&gt;XAI methods enhance trust and accountability in machine learning.&lt;/li&gt;&lt;/ul&gt;')">
+              Explainable AI
+          </div>
+          
+          <!-- Major Branch: Why Explain -->
+          <div class="node blue" style="width: 140px; top: 130px; left: 130px;" 
+              onclick="showInfo('Why Explain', 
+              '&lt;ul&gt;&lt;li&gt;Explanations help us understand, trust, and improve machine learning models.&lt;/li&gt;&lt;li&gt;They are needed to audit for bias, validate model decisions, and discover new insights.&lt;/li&gt;&lt;/ul&gt;')">
+              Why Explain
+          </div>
+          <!-- Details for Why Explain -->
+          <div class="node green" style="width: 100px; top: 30px; left: 50px;" 
+              onclick="showInfo('Audit', 
+              '&lt;ul&gt;&lt;li&gt;Audit: Identify biases or unfair practices (e.g., detecting discrimination in credit scoring).&lt;/li&gt;&lt;/ul&gt;')">
+              Audit
+          </div>
+          <div class="node green" style="width: 100px; top: 30px; left: 250px;" 
+              onclick="showInfo('Validate', 
+              '&lt;ul&gt;&lt;li&gt;Validate: Ensure that predictions are based on meaningful features and not spurious correlations.&lt;/li&gt;&lt;/ul&gt;')">
+              Validate
+          </div>
+          <div class="node green" style="width: 100px; top: 230px; left: 150px;" 
+              onclick="showInfo('Discover', 
+              '&lt;ul&gt;&lt;li&gt;Discover: Generate new insights and hypotheses by understanding model behavior.&lt;/li&gt;&lt;/ul&gt;')">
+              Discover
+          </div>
+          
+          <!-- Major Branch: Theory -->
+          <div class="node blue" style="width: 140px; top: 130px; left: 830px;" 
+              onclick="showInfo('Theory', 
+              '&lt;ul&gt;&lt;li&gt;Good explanations should be non-circular and understandable.&lt;/li&gt;&lt;li&gt;Different theoretical models exist to define what constitutes a good explanation.&lt;/li&gt;&lt;/ul&gt;')">
+              Theory
+          </div>
+          <!-- Details for Theory -->
+          <div class="node green" style="width: 160px; top: 30px; left: 670px;" 
+              onclick="showInfo('Deductive-Nomological Model', 
+              '&lt;ul&gt;&lt;li&gt;This model explains events by linking specific observations with general laws.&lt;/li&gt;&lt;li&gt;It is often criticized for its rigidity.&lt;/li&gt;&lt;/ul&gt;')">
+              Deductive-Nomological Model
+          </div>
+          <div class="node green" style="width: 160px; top: 30px; left: 920px;" 
+              onclick="showInfo('Interventionist Model', 
+              '&lt;ul&gt;&lt;li&gt;Focuses on causal relationships by showing what happens under interventions.&lt;/li&gt;&lt;li&gt;Highlights how changing a variable affects the outcome.&lt;/li&gt;&lt;/ul&gt;')">
+              Interventionist Model
+          </div>
+          <div class="node green" style="width: 180px; top: 230px; left: 760px;" 
+              onclick="showInfo('Epistemological Pragmatism', 
+              '&lt;ul&gt;&lt;li&gt;Argues that explanations are context-dependent and must answer specific questions.&lt;/li&gt;&lt;li&gt;Emphasizes the role of the question and context in defining interpretability.&lt;/li&gt;&lt;/ul&gt;')">
+              Epistemological Pragmatism
+          </div>
+          
+          <!-- Major Branch: Practice -->
+          <div class="node blue" style="width: 140px; top: 630px; left: 130px;" 
+              onclick="showInfo('Practice', 
+              '&lt;ul&gt;&lt;li&gt;XAI methods aim to make models interpretable through practical tools.&lt;/li&gt;&lt;li&gt;Common approaches include feature attributions, rule lists, and counterfactual explanations.&lt;/li&gt;&lt;/ul&gt;')">
+              Practice
+          </div>
+          <!-- Details for Practice -->
+          <div class="node green" style="width: 140px; top: 530px; left: 30px;" 
+              onclick="showInfo('Feature Attributions', 
+              '&lt;ul&gt;&lt;li&gt;Techniques (e.g., LIME, SHAP) assign credit to individual features for a prediction.&lt;/li&gt;&lt;li&gt;Shapley Values provide an axiomatic approach for attribution.&lt;/li&gt;&lt;/ul&gt;')">
+              Feature Attributions
+          </div>
+          <div class="node green" style="width: 140px; top: 530px; left: 230px;" 
+              onclick="showInfo('Rule Lists', 
+              '&lt;ul&gt;&lt;li&gt;Present decisions as a list of if-then rules, offering a transparent view of model logic.&lt;/li&gt;&lt;li&gt;Can be computed exactly for simple models but are challenging for ensembles.&lt;/li&gt;&lt;/ul&gt;')">
+              Rule Lists
+          </div>
+          <div class="node green" style="width: 140px; top: 730px; left: 30px;" 
+              onclick="showInfo('Counterfactuals', 
+              '&lt;ul&gt;&lt;li&gt;Identify minimal changes to an input that would alter the prediction.&lt;/li&gt;&lt;li&gt;Provide actionable recourse, though may be sensitive to how distance is measured.&lt;/li&gt;&lt;/ul&gt;')">
+              Counterfactuals
+          </div>
+          <div class="node green" style="width: 140px; top: 730px; left: 230px;" 
+              onclick="showInfo('XAI Dichotomies', 
+              '&lt;ul&gt;&lt;li&gt;Key distinctions include intrinsic vs. post-hoc, model-specific vs. model-agnostic, and global vs. local explanations.&lt;/li&gt;&lt;/ul&gt;')">
+              XAI Dichotomies
+          </div>
+          
+          <!-- Major Branch: Open Problems -->
+          <div class="node blue" style="width: 140px; top: 630px; left: 830px;" 
+              onclick="showInfo('Open Problems', 
+              '&lt;ul&gt;&lt;li&gt;Challenges include underdetermination, instability, and conflicting XAI methods.&lt;/li&gt;&lt;li&gt;Issues such as intellectual property can further limit transparency.&lt;/li&gt;&lt;/ul&gt;')">
+              Open Problems
+          </div>
+          <!-- Details for Open Problems -->
+          <div class="node green" style="width: 140px; top: 530px; left: 730px;" 
+              onclick="showInfo('Underdetermination', 
+              '&lt;ul&gt;&lt;li&gt;There is little consensus on what makes an explanation interpretable.&lt;/li&gt;&lt;/ul&gt;')">
+              Underdetermination
+          </div>
+          <div class="node green" style="width: 160px; top: 530px; left: 920px;" 
+              onclick="showInfo('Instability &amp; Adversarial Attacks', 
+              '&lt;ul&gt;&lt;li&gt;XAI methods can be sensitive to small changes and even manipulated adversarially.&lt;/li&gt;&lt;/ul&gt;')">
+              Instability &amp; Attacks
+          </div>
+          <div class="node green" style="width: 140px; top: 730px; left: 730px;" 
+              onclick="showInfo('Lack of Consensus', 
+              '&lt;ul&gt;&lt;li&gt;Different methods often yield conflicting explanations, complicating evaluation.&lt;/li&gt;&lt;/ul&gt;')">
+              Lack of Consensus
+          </div>
+          <div class="node green" style="width: 160px; top: 730px; left: 920px;" 
+              onclick="showInfo('Intellectual Property', 
+              '&lt;ul&gt;&lt;li&gt;Even when interpretable models exist, their internals may be protected by IP laws.&lt;/li&gt;&lt;/ul&gt;')">
+              Intellectual Property
+          </div>
+          
+          <!-- Major Branch: Conclusion -->
+          <div class="node blue" style="width: 140px; top: 680px; left: 480px;" 
+              onclick="showInfo('Conclusion', 
+              '&lt;ul&gt;&lt;li&gt;The debate centers on whether black box models are acceptable in high-stakes areas.&lt;/li&gt;&lt;li&gt;We must decide if explanations are needed and how to define success non-circularly.&lt;/li&gt;&lt;/ul&gt;')">
+              Conclusion
+          </div>
+          <!-- Details for Conclusion -->
+          <div class="node green" style="width: 140px; top: 750px; left: 330px;" 
+              onclick="showInfo('Black Box Models?', 
+              '&lt;ul&gt;&lt;li&gt;Should opaque models be used for important decisions without transparency?&lt;/li&gt;&lt;/ul&gt;')">
+              Black Box Models?
+          </div>
+          <div class="node green" style="width: 140px; top: 750px; left: 630px;" 
+              onclick="showInfo('Need for Explanations', 
+              '&lt;ul&gt;&lt;li&gt;Understanding model predictions is key for trust, accountability, and improvement.&lt;/li&gt;&lt;/ul&gt;')">
+              Need for Explanations
+          </div>
+          <div class="node green" style="width: 140px; top: 780px; left: 480px;" 
+              onclick="showInfo('Success Criteria', 
+              '&lt;ul&gt;&lt;li&gt;A major challenge is defining and measuring what makes an explanation good.&lt;/li&gt;&lt;/ul&gt;')">
+              Success Criteria
+          </div>
+      </div>
+      
+      <div id="infoPanel">
+          <div class="infoTitle" id="infoTitle">Click on a concept to see details</div>
+          <div class="infoContent" id="infoContent">Select any node in the mind map to display detailed information about that concept.</div>
+      </div>
+      
+      <div class="legend">
+          <div class="legendItem">
+              <div class="legendBox red"></div>
+              <span>Big Picture Concepts</span>
+          </div>
+          <div class="legendItem">
+              <div class="legendBox blue"></div>
+              <span>Major Categories</span>
+          </div>
+          <div class="legendItem">
+              <div class="legendBox green"></div>
+              <span>Components &amp; Details</span>
+          </div>
+      </div>
+  </div>
+  
+  <script>
+      function showInfo(title, content) {
+          document.getElementById("infoPanel").style.display = "block";
+          document.getElementById("infoTitle").textContent = title;
+          document.getElementById("infoContent").innerHTML = content;
+      }
+
+      // Display the central node info when the page loads
+      window.onload = function() {
+          showInfo('Explainable AI', 
+              '<ul><li><span class="highlight">Explainable AI (XAI)</span> addresses the black box problem by providing insight into model decisions.</li><li>It is essential for auditability, validation, and discovery in high-stakes domains.</li><li>XAI methods enhance trust and accountability in machine learning.</li></ul>');
+      };
+  </script>
+</body>
+</html>
